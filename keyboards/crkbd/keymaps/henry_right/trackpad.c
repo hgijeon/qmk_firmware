@@ -2,29 +2,37 @@
 
 // bool isScrollingMode = false;
 bool isScrollMode = false;
+extern report_mouse_t mouse_report;
 
 void pointing_device_init(void){
 
-  SPI_Init(SPI_SPEED_FCPU_DIV_8 | SPI_MODE_MASTER);
+  SPI_Init(SPI_SPEED_FCPU_DIV_16 | SPI_MODE_MASTER);
 
   // Set as output
   TP_RESET_INIT;
+  wait_ms(100);
   TP_SHUTDOWN_INIT;
+  wait_ms(100);
   TP_CS_INIT;
+  wait_ms(100);
   LVL_SHIFT_EN_INIT;
+  wait_ms(100);
 
   // Reset level shifter
   LVL_SHIFT_EN_LO;
   wait_ms(100);
   LVL_SHIFT_EN_HI;
+  wait_ms(100);
 
   // Force a BB-8520 reset
   TP_RESET_HI;
   wait_ms(100);
   TP_RESET_LO;
-
+  wait_ms(100);
+    
   // Turn on BB-8520 trackpad
   TP_SHUTDOWN_LO;
+  wait_ms(100);
 
   TP_CS_HI;
 }
@@ -73,6 +81,7 @@ void pointing_device_task(void){
       currentReport.y = dy * POINTER_SPEED_MULTIPLIER;
     }
 
+    currentReport.buttons = mouse_report.buttons;
     pointing_device_set_report(currentReport);
     pointing_device_send();
   }
