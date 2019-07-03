@@ -44,6 +44,7 @@ uint8_t readRegister(uint8_t address) {
 }
 
 void pointing_device_task(void){
+    if(readRegister(0x00) != 0x0D) return;
   uint8_t motion = readRegister(0x02);
 
   // Motion has occurred on the trackpad
