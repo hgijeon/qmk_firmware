@@ -6,7 +6,7 @@ extern report_mouse_t mouse_report;
 
 void pointing_device_init(void){
 
-  SPI_Init(SPI_SPEED_FCPU_DIV_16 | SPI_MODE_MASTER);
+  SPI_Init(SPI_SPEED_FCPU_DIV_8 | SPI_MODE_MASTER);
 
   // Set as output
   TP_RESET_INIT;
@@ -75,7 +75,7 @@ void pointing_device_task(void){
         static int accum_x = 0, accum_y = 0;
         accum_x += dx; accum_y += dy;
       currentReport.h = accum_x/SCROLL_SPEED_DIVIDER;
-      currentReport.v = accum_y/SCROLL_SPEED_DIVIDER;
+      currentReport.v = -accum_y/SCROLL_SPEED_DIVIDER;
         accum_x %= SCROLL_SPEED_DIVIDER; accum_y %= SCROLL_SPEED_DIVIDER;
     }
     else
