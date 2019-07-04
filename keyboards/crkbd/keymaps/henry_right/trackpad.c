@@ -72,8 +72,11 @@ void pointing_device_task(void){
     report_mouse_t currentReport = pointing_device_get_report();
     if (isScrollMode)
     {
-      currentReport.h = dx/SCROLL_SPEED_DIVIDER;
-      currentReport.v = dy/SCROLL_SPEED_DIVIDER;
+        static int accum_x = 0, accum_y = 0;
+        accum_x += dx; accum_y += dy;
+      currentReport.h = accum_x/SCROLL_SPEED_DIVIDER;
+      currentReport.v = accum_y/SCROLL_SPEED_DIVIDER;
+        accum_x %= SCROLL_SPEED_DIVIDER; accum_y %= SCROLL_SPEED_DIVIDER;
     }
     else
     {

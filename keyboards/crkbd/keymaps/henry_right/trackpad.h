@@ -7,8 +7,8 @@
 #include "../../lib/lufa/LUFA/Drivers/Peripheral/SPI.h"
 
 // Trackpad speed adjustments
-#define POINTER_SPEED_MULTIPLIER 4
-#define SCROLL_SPEED_DIVIDER 4
+#define POINTER_SPEED_MULTIPLIER 2
+#define SCROLL_SPEED_DIVIDER 8
 
 // Pins on corresponding ports
 #define TP_RESET     1
