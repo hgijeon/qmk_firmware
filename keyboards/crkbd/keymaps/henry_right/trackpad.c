@@ -60,8 +60,8 @@ void pointing_device_task(void){
 
   int8_t dx, dy;
 
-    dy = readRegister(0x03);
-    dx = readRegister(0x04);
+    dy = -readRegister(0x03);
+    dx = -readRegister(0x04);
 
     report_mouse_t currentReport = pointing_device_get_report();
     if (isScrollMode)
