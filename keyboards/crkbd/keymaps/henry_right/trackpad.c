@@ -1,85 +1,153 @@
 #include "trackpad.h"
 
-// bool isScrollingMode = false;
+
 bool isScrollMode = false;
 extern report_mouse_t mouse_report;
 
-void pointing_device_init(void){
+#define Assert_CS() TP_CS_LO
+#define DeAssert_CS() TP_CS_HI
 
-  SPI_Init(SPI_SPEED_FCPU_DIV_8 | SPI_MODE_MASTER);
+// Masks for Cirque Register Access Protocol (RAP)
+#define WRITE_MASK  0x80
+#define READ_MASK   0xA0
 
-  // Set as output
-  TP_RESET_INIT;
-  wait_ms(100);
-  TP_SHUTDOWN_INIT;
-  wait_ms(100);
-  TP_CS_INIT;
-  wait_ms(100);
-  LVL_SHIFT_EN_INIT;
-  wait_ms(100);
+// Register config values for this demo
+#define SYSCONFIG_1   0x00
+#define FEEDCONFIG_1  0x03
+#define FEEDCONFIG_2  0x1F
+#define Z_IDLE_COUNT  0x05
 
-  // Reset level shifter
-  LVL_SHIFT_EN_LO;
-  wait_ms(100);
-  LVL_SHIFT_EN_HI;
-  wait_ms(100);
-
-  // Force a BB-8520 reset
-  TP_RESET_HI;
-  wait_ms(100);
-  TP_RESET_LO;
-  wait_ms(100);
-    
-  // Turn on BB-8520 trackpad
-  TP_SHUTDOWN_LO;
-  wait_ms(100);
-
-  TP_CS_HI;
+bool DR_Asserted(void){
+  return (PIND & (1 << 3));
 }
 
-uint8_t readRegister(uint8_t address) {
-  uint8_t data;
+void move_pointer(int x){
+  report_mouse_t currentReport = pointing_device_get_report();
+    currentReport.x = x;
+    currentReport.y = 0;
 
-  TP_CS_LO;
+    currentReport.buttons = mouse_report.buttons;
+    pointing_device_set_report(currentReport);
+    pointing_device_send();
+}
 
-  // Read the data
-  SPI_TransferByte(address);
-  data = SPI_TransferByte(0x00);
+uint8_t last_result = 13;
 
-  TP_CS_HI;
+// Writes single-byte <data> to <address>
+void RAP_Write(uint8_t address, uint8_t data)
+{
+  uint8_t cmdByte = WRITE_MASK | address;  // Form the WRITE command byte
+
+  SPI_Init(SPI_SPEED_FCPU_DIV_16 | SPI_MODE_MASTER | SPI_SCK_LEAD_RISING | SPI_SAMPLE_TRAILING);
+  Assert_CS();
+  wait_ms(1);
+
+  SPI_TransferByte(cmdByte);  // Signal a write to register at <address>
+  last_result = SPI_TransferByte(data);    // Send <value> to be written to register
+
+  wait_ms(1);
+  DeAssert_CS();
+
+}
+
+
+// Reads single-byte <data> from <address>
+uint8_t RAP_Read(uint8_t address)
+{
+  uint8_t cmdByte = READ_MASK | address;  // Form the WRITE command byte
+
+  Assert_CS();
+  wait_ms(1);
+
+  SPI_TransferByte(cmdByte);  // Signal a write to register at <address>
+  uint8_t data = SPI_TransferByte(0xfb);    // Send <value> to be written to register
+
+  wait_ms(1);
+  DeAssert_CS();
 
   return data;
 }
 
+
+// Clears Status1 register flags (SW_CC and SW_DR)
+void Pinnacle_ClearFlags(void){
+  RAP_Write(0x02, 0x00);
+  wait_ms(50);
+}
+
+/*  Pinnacle-based TM040040 Functions  */
+void Pinnacle_Init(void)
+{
+  DeAssert_CS();
+  wait_ms(10);
+
+  wait_ms(10);
+  SPI_Init(SPI_SPEED_FCPU_DIV_16 | SPI_MODE_MASTER | SPI_SCK_LEAD_RISING | SPI_SAMPLE_TRAILING);
+
+  wait_ms(10);
+  TP_CS_INIT;
+  DDRD &= ~(1 << 3);
+  //pinMode(DR_PIN, INPUT);
+
+
+
+  LVL_SHIFT_EN_INIT;
+  wait_ms(10);
+
+  // Reset level shifter
+  LVL_SHIFT_EN_LO;
+  wait_ms(10);
+  LVL_SHIFT_EN_HI;
+  wait_ms(10);
+
+
+
+  // Host clears SW_CC flag
+  Pinnacle_ClearFlags();
+
+  wait_ms(10);
+  // Host configures bits of registers 0x03 and 0x05
+  RAP_Write(0x03, SYSCONFIG_1);
+  RAP_Write(0x05, FEEDCONFIG_2);
+
+  // Host enables preferred output mode (absolute)
+  RAP_Write(0x04, FEEDCONFIG_1);
+
+  // Host sets z-idle packet count to 5 (default is 30)
+  RAP_Write(0x0A, Z_IDLE_COUNT);
+}
+
+
+
+
+
+
+void pointing_device_init(void){
+  Pinnacle_Init();
+}
+
 void pointing_device_task(void){
-    if(readRegister(0x00) != 0x0D) return;
-  uint8_t motion = readRegister(0x02);
-
-  // Motion has occurred on the trackpad
-  if (motion > 127) {
-
-  int8_t dx, dy;
-
-    dy = -readRegister(0x03);
-    dx = -readRegister(0x04);
-
-    report_mouse_t currentReport = pointing_device_get_report();
-    if (isScrollMode)
-    {
-        static int accum_x = 0, accum_y = 0;
-        accum_x += dx; accum_y += dy;
-      currentReport.h = accum_x/SCROLL_SPEED_DIVIDER;
-      currentReport.v = -accum_y/SCROLL_SPEED_DIVIDER;
-        accum_x %= SCROLL_SPEED_DIVIDER; accum_y %= SCROLL_SPEED_DIVIDER;
-    }
-    else
-    {
-      currentReport.x = dx * POINTER_SPEED_MULTIPLIER;
-      currentReport.y = dy * POINTER_SPEED_MULTIPLIER;
-    }
+  report_mouse_t currentReport = pointing_device_get_report();
+  if(last_result == 0xff) move_pointer(1);
+  if (isScrollMode){}
+  if(DR_Asserted())
+  {
+    currentReport.x = 0;
+    currentReport.y = 0;
 
     currentReport.buttons = mouse_report.buttons;
     pointing_device_set_report(currentReport);
     pointing_device_send();
   }
 }
+
+
+
+
+
+
+
+
+
+
+
