@@ -76,11 +76,10 @@ void glidepoint_circle_init(void){
   // data ready pin init
   DDRD &= ~(1 << 3);
 
-  // Host clears SW_CC flag
-  Pinnacle_ClearFlags();
-
   wait_ms(10);
   // Host configures bits of registers 0x03 and 0x05
+  RAP_Write(0x03, 0x01);
+  wait_ms(5);
   RAP_Write(0x03, SYSCONFIG_1);
   RAP_Write(0x05, FEEDCONFIG_2);
 
@@ -89,6 +88,10 @@ void glidepoint_circle_init(void){
 
   // Host sets z-idle packet count to 5 (default is 30)
   RAP_Write(0x0A, Z_IDLE_COUNT);
+
+  // Host clears SW_CC flag
+  Pinnacle_ClearFlags();
+
 }
 
 
@@ -111,8 +114,8 @@ typedef struct _absData
 
 typedef struct _relData
 {
-  int8_t xValue;
-  int8_t yValue;
+  int16_t xValue;
+  int16_t yValue;
   uint8_t buttonFlags;
   bool touchDown;
 } relData_t;
@@ -171,19 +174,27 @@ void Pinnacle_GetRelative(relData_t * result)
 
 
 void pointing_device_task(void){
-  touchData.xValue = touchData.yValue = 0;
+  if (isScrollMode){
 
-  Pinnacle_GetRelative(&touchData);
+  }
 
-  report_mouse_t currentReport = pointing_device_get_report();
-  if (isScrollMode){}
-  //if(DR_Asserted())
+  static int cnt = 0;
+  ++cnt;
+
+  if((cnt % 8 == 0) || DR_Asserted())
+  {
+    touchData.xValue = touchData.yValue = 0;
+    Pinnacle_GetRelative(&touchData);
+
+    report_mouse_t currentReport = pointing_device_get_report();
+
     currentReport.x = touchData.xValue;
     currentReport.y = touchData.yValue;
 
     currentReport.buttons = mouse_report.buttons;
     pointing_device_set_report(currentReport);
     pointing_device_send();
+  }
 }
 
 
