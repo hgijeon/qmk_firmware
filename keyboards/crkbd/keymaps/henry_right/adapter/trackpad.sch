@@ -518,17 +518,17 @@ Wire Wire Line
 Connection ~ 5300 3900
 Text GLabel 5600 4650 2    50   Input ~ 0
 TP_CS
-Text GLabel 5600 4850 2    50   Input ~ 0
+Text GLabel 5600 5250 2    50   Input ~ 0
 MOSI
 Text GLabel 5600 5050 2    50   Input ~ 0
 MISO
-Text GLabel 5600 5250 2    50   Input ~ 0
+Text GLabel 5600 4850 2    50   Input ~ 0
 SCK
-Text GLabel 4800 5250 0    50   Input ~ 0
+Text GLabel 4800 4850 0    50   Input ~ 0
 SCK_3V3
 Text GLabel 4800 5050 0    50   Input ~ 0
 MISO_3V3
-Text GLabel 4800 4850 0    50   Input ~ 0
+Text GLabel 4800 5250 0    50   Input ~ 0
 MOSI_3V3
 Text GLabel 4800 4650 0    50   Input ~ 0
 TP_CS_3V3
