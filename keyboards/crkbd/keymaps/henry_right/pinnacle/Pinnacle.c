@@ -49,7 +49,7 @@ void Pinnacle_init(touchData_t * touchData, uint8_t sensorId)
   // Setting System configuration bits.
   Pinnacle_setZIdleCount(5, sensorId);
   Pinnacle_enableFeed(true, sensorId);
-  Pinnacle_setToAbsolute(touchData, sensorId);
+  Pinnacle_setToRelative(touchData, sensorId);
 }
 
 // Returns true if the data-ready signal (DR) is asserted

@@ -71,17 +71,19 @@ void pointing_device_task(void){
 
   if((cnt % 8 == 0) || DR_Asserted())
   {
-    touchData.absolute.xValue = touchData.absolute.yValue = 0;
-    Pinnacle_getTouchData(&touchData, 0);
+    if(touchData.mode == RELATIVE){
+      touchData.relative.xDelta = touchData.relative.yDelta = 0;
+      Pinnacle_getTouchData(&touchData, 0);
 
-    report_mouse_t currentReport = pointing_device_get_report();
+      report_mouse_t currentReport = pointing_device_get_report();
 
-    currentReport.x = touchData.absolute.xValue;
-    currentReport.y = touchData.absolute.yValue;
+      currentReport.x = touchData.relative.xDelta;
+      currentReport.y = touchData.relative.yDelta;
 
-    currentReport.buttons = mouse_report.buttons;
-    pointing_device_set_report(currentReport);
-    pointing_device_send();
+      currentReport.buttons = mouse_report.buttons;
+      pointing_device_set_report(currentReport);
+      pointing_device_send();
+    }
   }
 }
 
