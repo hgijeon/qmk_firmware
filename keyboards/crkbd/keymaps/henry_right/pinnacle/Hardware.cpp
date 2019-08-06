@@ -1,13 +1,21 @@
 // Copyright (c) 2018 Cirque Corp. Restrictions apply. See: www.cirque.com/sw-license
 
-#include <Arduino.h>
-#include <SPI.h>
 #include "Hardware.h"
+#include "../../lib/lufa/LUFA/Drivers/Peripheral/SPI.h"
 
-#define CS0_PIN   10      // Chip Select pin for Sensor 0
-#define DR0_PIN   9       // Data Ready pin for Sensor 0
-#define CS1_PIN   8       // Chip Select pin for Sensor 1
-#define DR1_PIN   7       // Data Ready pin for Sensor 1
+#define MACRO_CONCAT(a, b) a##b
+
+#define pinModeOutput(port, pin) (MACRO_CONCAT(DDR, port) |= (1 << pin))
+#define pinModeInput(port, pin)  (MACRO_CONCAT(DDR, port) &= ~ (1 << pin))
+
+#define pinWriteHigh(port, pin) (MACRO_CONCAT(PORT, port) |= (1 << pin))
+#define pinWriteLow(port, pin)  (MACRO_CONCAT(PORT, port) &= ~ (1 << pin))
+#define pinRead(port, pin)  ((MACRO_CONCAT(PIN, port) >> pin) & 1)
+
+#define CS0_PORT  B
+#define CS0_PIN   0      // Chip Select pin for Sensor 0
+#define DR0_PORT  D
+#define DR0_PIN   3       // Data Ready pin for Sensor 0
 
 typedef struct _sensorPort
 {
@@ -16,17 +24,13 @@ typedef struct _sensorPort
   uint8_t sensorId;     // also the index of the sensor in the code.
 } sensorPort_t;
 
-sensorPort_t sensorList[2];
-
-SPISettings _spiSettings;
+sensorPort_t sensorList[1];
 
 void HW_init()
 {
   // set the CS pins as output and DR pins as inputs
-  pinMode(CS0_PIN, OUTPUT);
-  pinMode(DR0_PIN, INPUT);
-  pinMode(CS1_PIN, OUTPUT);
-  pinMode(DR1_PIN, INPUT);
+  pinModeOutput(CS0_PORT, CS0_PIN);
+  pinModeInput(DR0_PORT, DR0_PIN);
 
   // create sensorPort objects for the sensorList and insert them into the array
   sensorPort_t temp;
@@ -36,61 +40,55 @@ void HW_init()
   temp.sensorId = 0;
 
   sensorList[0] = temp;
-
-  temp.CS_Pin = CS1_PIN;
-  temp.DR_Pin = DR1_PIN;
-  temp.sensorId = 1;
-
-  sensorList[1] = temp;
 }
 
 void HW_assertCS(uint8_t sensorId)
 {
-  digitalWriteFast(sensorList[sensorId].CS_Pin, LOW);
+  pinWriteLow(CS0_PORT, sensorList[sensorId].CS_Pin);
 }
 
 void HW_deAssertCS(uint8_t sensorId)
 {
-  digitalWriteFast(sensorList[sensorId].CS_Pin, HIGH);
+  pinWriteHigh(CS0_PORT, sensorList[sensorId].CS_Pin);
 }
 
 bool HW_drAsserted(uint8_t sensorId)
 {
-  return digitalRead(sensorList[sensorId].DR_Pin);
+  return pinRead(DR0_PORT, sensorList[sensorId].DR_Pin);
 }
 
 void TIMER_delayMicroseconds(uint32_t microSeconds)
 {
-  delayMicroseconds(microSeconds);
+  //FIXME: disabled
+  //delayMicroseconds(microSeconds);
 }
 
 void SPI_init(uint32_t bitRate, uint8_t bitOrder, uint8_t spiMode)
 {
-  _spiSettings = SPISettings(bitRate, bitOrder, spiMode);
-  SPI.begin();
+  SPI_Init(SPI_SPEED_FCPU_DIV_2 | SPI_MODE_MASTER | SPI_SCK_LEAD_RISING | SPI_SAMPLE_TRAILING);
 }
 
 void SPI_end()
 {
-  SPI.end();
+  //SPI.end();
 }
 
 void SPI_beginTransaction()
 {
-  SPI.beginTransaction(_spiSettings);
+  //SPI.beginTransaction(_spiSettings);
 }
 
 void SPI_endTransaction()
 {
-  SPI.endTransaction();
+  //SPI.endTransaction();
 }
 
 uint8_t SPI_transfer(uint8_t data)
 {
-  return SPI.transfer(data);
+  return SPI_TransferByte(data);
 }
 
 void SPI_transferBytes(uint8_t * data, uint16_t count)
 {
-  SPI.transfer(data, count);
+  for(int i = 0; i < count; ++i) SPI_TransferByte(data[i]);
 }

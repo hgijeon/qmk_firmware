@@ -8,3 +8,5 @@ BOOTLOADER = atmel-dfu
 
 # Add support for the BB 8520 trackpad
 SRC += trackpad.c
+SRC += pinnacle/Hardware.cpp
+SRC += pinnacle/Pinnacle.c
