@@ -2,7 +2,7 @@
 
   (general
     (thickness 1.6)
-    (drawings 10)
+    (drawings 12)
     (tracks 165)
     (zones 0)
     (modules 10)
@@ -18,14 +18,14 @@
   )
 
   (layers
-    (0 F.Cu signal hide)
+    (0 F.Cu signal)
     (31 B.Cu signal)
     (32 B.Adhes user hide)
     (33 F.Adhes user hide)
     (34 B.Paste user hide)
     (35 F.Paste user hide)
     (36 B.SilkS user)
-    (37 F.SilkS user hide)
+    (37 F.SilkS user)
     (38 B.Mask user hide)
     (39 F.Mask user hide)
     (40 Dwgs.User user hide)
@@ -1050,6 +1050,12 @@
     )
   )
 
+  (gr_text .1u (at 114.8 79.34 90) (layer B.SilkS) (tstamp 5D4AEC43)
+    (effects (font (size 0.7 0.7) (thickness 0.15)) (justify mirror))
+  )
+  (gr_text 10u (at 112.26 79.34 90) (layer B.SilkS)
+    (effects (font (size 0.7 0.7) (thickness 0.15)) (justify mirror))
+  )
   (gr_line (start 98.82 69.85) (end 98.83 69.85) (layer Edge.Cuts) (width 0.15) (tstamp 5D4AD00C))
   (gr_text "GlidePoint Circle Adapter\nHenry Jian" (at 100.076 81.28) (layer F.SilkS)
     (effects (font (size 0.7 0.7) (thickness 0.175)) (justify left))
@@ -1229,7 +1235,7 @@
   (segment (start 118.75999 75.01999) (end 119.9 76.16) (width 0.25) (layer B.Cu) (net 37))
   (segment (start 102.18 75.99) (end 102.66 75.99) (width 0.25) (layer B.Cu) (net 37))
 
-  (zone (net 1) (net_name GND) (layer F.Cu) (tstamp 5D4AD016) (hatch edge 0.508)
+  (zone (net 1) (net_name GND) (layer F.Cu) (tstamp 5D4AED2D) (hatch edge 0.508)
     (connect_pads (clearance 0.254))
     (min_thickness 0.254)
     (fill yes (arc_segments 16) (thermal_gap 0.508) (thermal_bridge_width 0.508))
@@ -1426,7 +1432,7 @@
       )
     )
   )
-  (zone (net 1) (net_name GND) (layer B.Cu) (tstamp 5D4AD013) (hatch edge 0.508)
+  (zone (net 1) (net_name GND) (layer B.Cu) (tstamp 5D4AED2A) (hatch edge 0.508)
     (connect_pads (clearance 0.254))
     (min_thickness 0.254)
     (fill yes (arc_segments 16) (thermal_gap 0.508) (thermal_bridge_width 0.508))

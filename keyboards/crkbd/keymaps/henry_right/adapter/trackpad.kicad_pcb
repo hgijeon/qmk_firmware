@@ -94,7 +94,7 @@
       (mirror false)
       (drillshape 0)
       (scaleselection 1)
-      (outputdirectory "../plot1/"))
+      (outputdirectory "./adapter/"))
   )
 
   (net 0 "")
@@ -1235,7 +1235,7 @@
   (segment (start 118.75999 75.01999) (end 119.9 76.16) (width 0.25) (layer B.Cu) (net 37))
   (segment (start 102.18 75.99) (end 102.66 75.99) (width 0.25) (layer B.Cu) (net 37))
 
-  (zone (net 1) (net_name GND) (layer F.Cu) (tstamp 5D4AED2D) (hatch edge 0.508)
+  (zone (net 1) (net_name GND) (layer F.Cu) (tstamp 5D4AED38) (hatch edge 0.508)
     (connect_pads (clearance 0.254))
     (min_thickness 0.254)
     (fill yes (arc_segments 16) (thermal_gap 0.508) (thermal_bridge_width 0.508))
@@ -1432,7 +1432,7 @@
       )
     )
   )
-  (zone (net 1) (net_name GND) (layer B.Cu) (tstamp 5D4AED2A) (hatch edge 0.508)
+  (zone (net 1) (net_name GND) (layer B.Cu) (tstamp 5D4AED35) (hatch edge 0.508)
     (connect_pads (clearance 0.254))
     (min_thickness 0.254)
     (fill yes (arc_segments 16) (thermal_gap 0.508) (thermal_bridge_width 0.508))
