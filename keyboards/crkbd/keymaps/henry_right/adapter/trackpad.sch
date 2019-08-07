@@ -202,7 +202,7 @@ Text GLabel 5800 1450 0    50   Input ~ 0
 PD3
 Wire Wire Line
 	5800 1450 6100 1450
-Text GLabel 3800 2550 3    50   Input ~ 0
+Text GLabel 2200 1550 3    50   Input ~ 0
 TP_DR_3V3
 Wire Wire Line
 	2750 3100 2750 2950
