@@ -14,7 +14,7 @@
 #define LVL_SHIFT_EN 7
 
 // Configure as output
-#define LVL_SHIFT_EN_INIT DDRC |= (1 << LVL_SHIFT_EN);
+#define LVL_SHIFT_EN_INIT DDRB |= (1 << LVL_SHIFT_EN);
 
-#define LVL_SHIFT_EN_HI PORTC |= (1 << LVL_SHIFT_EN);
-#define LVL_SHIFT_EN_LO PORTC &= ~ (1 << LVL_SHIFT_EN);
+#define LVL_SHIFT_EN_HI PORTB |= (1 << LVL_SHIFT_EN);
+#define LVL_SHIFT_EN_LO PORTB &= ~ (1 << LVL_SHIFT_EN);

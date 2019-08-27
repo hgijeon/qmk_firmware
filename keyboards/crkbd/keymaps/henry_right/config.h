@@ -28,7 +28,7 @@
 /* key matrix size */
 // Rows are doubled-up
 #undef MATRIX_COL_PINS
-#define MATRIX_COL_PINS { F4, F5, F6, F7, B7, D5 }
+#define MATRIX_COL_PINS { F4, F5, F6, F7, C7, F1 }
 
 /* ws2812 RGB LED */
 #undef RGB_DI_PIN

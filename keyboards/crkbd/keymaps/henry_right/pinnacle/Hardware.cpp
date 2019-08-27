@@ -15,7 +15,7 @@
 #define CS0_PORT  B
 #define CS0_PIN   0      // Chip Select pin for Sensor 0
 #define DR0_PORT  D
-#define DR0_PIN   3       // Data Ready pin for Sensor 0
+#define DR0_PIN   2       // Data Ready pin for Sensor 0
 
 typedef struct _sensorPort
 {
