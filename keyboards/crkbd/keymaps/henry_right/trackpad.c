@@ -34,8 +34,9 @@ void level_shift_init(void){
 void pointing_device_init(void){
   level_shift_init();
 
-  HW_init();
+//spi init이 hw init보다 앞에 있어야 한다.
   SPI_init(0, 0, 0);
+  HW_init();
 
   Pinnacle_init(&touchData, 0);
 }
