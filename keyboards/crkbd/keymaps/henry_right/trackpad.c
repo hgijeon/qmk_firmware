@@ -38,16 +38,14 @@ void pointing_device_init(void){
   SPI_init(0, 0, 0);
   HW_init();
 
+  Pinnacle_cyclePower(0);
   Pinnacle_init(&touchData, 0);
 }
 
 void pointing_device_task(void){
   if (isScrollMode){}
 
-  static int cnt = 0;
-  ++cnt;
-
-  if((cnt % 8 == 0) || HW_drAsserted(0))
+  if(HW_drAsserted(0))
   {
     if(touchData.mode == RELATIVE){
       touchData.relative.xDelta = touchData.relative.yDelta = 0;

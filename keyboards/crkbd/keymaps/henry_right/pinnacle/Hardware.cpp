@@ -3,6 +3,8 @@
 #include "Hardware.h"
 #include "../../lib/lufa/LUFA/Drivers/Peripheral/SPI.h"
 
+#include "wait.h"
+
 #define MACRO_CONCAT(a, b) a##b
 
 #define pinModeOutput(port, pin) (MACRO_CONCAT(DDR, port) |= (1 << pin))
@@ -14,8 +16,8 @@
 
 #define CS0_PORT  B
 #define CS0_PIN   0      // Chip Select pin for Sensor 0
-#define DR0_PORT  D
-#define DR0_PIN   2       // Data Ready pin for Sensor 0
+#define DR0_PORT  B
+#define DR0_PIN   6       // Data Ready pin for Sensor 0
 
 typedef struct _sensorPort
 {
@@ -61,11 +63,13 @@ void TIMER_delayMicroseconds(uint32_t microSeconds)
 {
   //FIXME: disabled
   //delayMicroseconds(microSeconds);
+  for(int i = 0; i < 1 + microSeconds/4; ++i)
+  wait_us(4);
 }
 
 void SPI_init(uint32_t bitRate, uint8_t bitOrder, uint8_t spiMode)
 {
-  SPI_Init(SPI_SPEED_FCPU_DIV_2 | SPI_MODE_MASTER | SPI_SCK_LEAD_RISING | SPI_SAMPLE_TRAILING);
+  SPI_Init(SPI_SPEED_FCPU_DIV_8 | SPI_MODE_MASTER | SPI_SCK_LEAD_RISING | SPI_SAMPLE_TRAILING);
 }
 
 void SPI_end()
