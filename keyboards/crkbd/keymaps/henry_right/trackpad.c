@@ -58,12 +58,9 @@ void pointing_device_task(void){
       int raw_x = touchData.relative.xDelta;
       int raw_y = touchData.relative.yDelta;
       accum_x += raw_y;
-      accum_y += -raw_x;
+      accum_y += raw_x;
 
-      static int cnt = 0;
-      ++cnt;
-      bool to_send = (cnt % 2) == 0;
-      if(to_send){
+      {
         currentReport.x = accum_x;
         currentReport.y = accum_y;
         accum_x = accum_y = 0;
