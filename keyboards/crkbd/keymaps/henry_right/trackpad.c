@@ -45,6 +45,8 @@ void pointing_device_init(void){
 void pointing_device_task(void){
   if (isScrollMode){}
 
+  static int accum_x = 0, accum_y = 0;
+
   if(HW_drAsserted(0))
   {
     if(touchData.mode == RELATIVE){
@@ -53,12 +55,23 @@ void pointing_device_task(void){
 
       report_mouse_t currentReport = pointing_device_get_report();
 
-      currentReport.x = touchData.relative.xDelta;
-      currentReport.y = touchData.relative.yDelta;
+      int raw_x = touchData.relative.xDelta;
+      int raw_y = touchData.relative.yDelta;
+      accum_x += raw_y;
+      accum_y += -raw_x;
 
-      currentReport.buttons = mouse_report.buttons;
-      pointing_device_set_report(currentReport);
-      pointing_device_send();
+      static int cnt = 0;
+      ++cnt;
+      bool to_send = (cnt % 2) == 0;
+      if(to_send){
+        currentReport.x = accum_x;
+        currentReport.y = accum_y;
+        accum_x = accum_y = 0;
+
+        currentReport.buttons = mouse_report.buttons;
+        pointing_device_set_report(currentReport);
+        pointing_device_send();
+      }
     }
   }
 }
