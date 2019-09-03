@@ -42,14 +42,13 @@ void Pinnacle_init(touchData_t * touchData, uint8_t sensorId)
   HW_deAssertCS(sensorId);
   Pinnacle_clearFlags(sensorId);
 
-  // Host disables taps, secondary tap, scroll, and GlideExtend(R)
-  // NOTE: these features pertain to relative mode only
-  //  RAP_write(FEED_CONFIG_2, 0x1E);
-
   // Setting System configuration bits.
-  Pinnacle_setZIdleCount(5, sensorId);
+  //Pinnacle_setZIdleCount(5, sensorId);
   Pinnacle_enableFeed(true, sensorId);
   Pinnacle_setToRelative(touchData, sensorId);
+
+  RAP_write(FEED_CONFIG_1, 0x00, sensorId);
+  RAP_write(FEED_CONFIG_2, 0x1E, sensorId);
 }
 
 // Returns true if the data-ready signal (DR) is asserted
