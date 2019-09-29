@@ -15,17 +15,6 @@ Comment3 ""
 Comment4 ""
 $EndDescr
 $Comp
-L trackpad-rescue:corne-classic-rescue_ProMicro-kbd-corne-classic-cache-trackpad-rescue U2
-U 1 1 5BF8BB0A
-P 8350 5000
-F 0 "U2" H 8350 6037 60  0000 C CNN
-F 1 "ProMicro" H 8350 5931 60  0000 C CNN
-F 2 "trackpad:ArduinoProMicro" H 8450 3950 60  0001 C CNN
-F 3 "" H 8450 3950 60  0000 C CNN
-	1    8350 5000
-	1    0    0    -1  
-$EndComp
-$Comp
 L trackpad-rescue:Elite-C-keebio-trackpad-rescue U1
 U 1 1 5BF8DE68
 P 8300 2200
@@ -36,84 +25,6 @@ F 3 "" V 9350 -300 60  0001 C CNN
 	1    8300 2200
 	1    0    0    -1  
 $EndComp
-$Comp
-L power:GND #PWR0101
-U 1 1 5BFB3888
-P 7050 4550
-F 0 "#PWR0101" H 7050 4300 50  0001 C CNN
-F 1 "GND" H 7050 4400 50  0000 C CNN
-F 2 "" H 7050 4550 50  0001 C CNN
-F 3 "" H 7050 4550 50  0001 C CNN
-	1    7050 4550
-	0    1    1    0   
-$EndComp
-Wire Wire Line
-	7050 4550 7500 4550
-$Comp
-L power:GND #PWR0102
-U 1 1 5BFC66DA
-P 9650 4350
-F 0 "#PWR0102" H 9650 4100 50  0001 C CNN
-F 1 "GND" V 9655 4222 50  0000 R CNN
-F 2 "" H 9650 4350 50  0001 C CNN
-F 3 "" H 9650 4350 50  0001 C CNN
-	1    9650 4350
-	0    -1   -1   0   
-$EndComp
-$Comp
-L power:+5V #PWR0103
-U 1 1 5BFC7635
-P 9650 4550
-F 0 "#PWR0103" H 9650 4400 50  0001 C CNN
-F 1 "+5V" V 9665 4678 50  0000 L CNN
-F 2 "" H 9650 4550 50  0001 C CNN
-F 3 "" H 9650 4550 50  0001 C CNN
-	1    9650 4550
-	0    1    1    0   
-$EndComp
-Wire Wire Line
-	7650 4450 7500 4450
-Connection ~ 7500 4550
-Wire Wire Line
-	7500 4550 7650 4550
-Wire Wire Line
-	7500 4450 7500 4550
-Text GLabel 9350 4450 2    47   Input ~ 0
-RST
-Text GLabel 7350 4350 0    50   Input ~ 0
-PD2
-Wire Wire Line
-	7350 4350 7650 4350
-Wire Wire Line
-	9050 4350 9650 4350
-Wire Wire Line
-	9050 4450 9350 4450
-Wire Wire Line
-	9050 4550 9650 4550
-Text GLabel 7350 4650 0    50   Input ~ 0
-PD1
-Wire Wire Line
-	7350 4650 7650 4650
-Text GLabel 7350 4750 0    50   Input ~ 0
-PD0
-Wire Wire Line
-	7350 4750 7650 4750
-Text GLabel 7350 4850 0    50   Input ~ 0
-PD4
-Wire Wire Line
-	7350 4850 7650 4850
-Text GLabel 7350 4950 0    50   Input ~ 0
-PC6
-Wire Wire Line
-	7350 4950 7650 4950
-Text GLabel 7350 5050 0    50   Input ~ 0
-PD7
-Wire Wire Line
-	7350 5050 7650 5050
-Text GLabel 7350 5150 0    50   Input ~ 0
-PE6
-Wire Wire Line
-	7350 5150 7650 5150
 $Comp
 L power:GND #PWR0104
 U 1 1 5BFDDB09
@@ -168,34 +79,6 @@ Text GLabel 7300 2750 0    50   Input ~ 0
 PB5
 Wire Wire Line
 	7300 2750 7600 2750
-Wire Wire Line
-	9350 5350 9050 5350
-Wire Wire Line
-	9350 5150 9050 5150
-Wire Wire Line
-	9350 5050 9050 5050
-Text GLabel 9350 4950 2    50   Input ~ 0
-PF7
-Wire Wire Line
-	9350 4950 9050 4950
-Text GLabel 9350 4850 2    50   Input ~ 0
-PF6
-Wire Wire Line
-	9350 4850 9050 4850
-Text GLabel 9350 4750 2    50   Input ~ 0
-PF5
-Wire Wire Line
-	9350 4750 9050 4750
-Text GLabel 9350 4650 2    50   Input ~ 0
-PF4
-Wire Wire Line
-	9350 4650 9050 4650
-Text GLabel 9350 5350 2    50   Input ~ 0
-PB6
-Text GLabel 7350 4250 0    50   Input ~ 0
-PD3
-Wire Wire Line
-	7350 4250 7650 4250
 Wire Wire Line
 	8100 3300 8100 3150
 $Comp
@@ -256,10 +139,6 @@ Text GLabel 9300 2750 2    50   Input ~ 0
 PB6
 Wire Wire Line
 	8200 3300 8200 3150
-Text GLabel 7350 5250 0    50   Input ~ 0
-PB4
-Wire Wire Line
-	7350 5250 7650 5250
 Wire Wire Line
 	8300 3300 8300 3150
 Wire Wire Line
@@ -349,14 +228,6 @@ F 3 "~" H 4600 1800 50  0001 C CNN
 $EndComp
 Text GLabel 4700 1550 1    50   Input ~ 0
 LVL_SHIFT
-Text GLabel 7350 5350 0    50   Input ~ 0
-PB5
-Wire Wire Line
-	7350 5350 7650 5350
-Wire Wire Line
-	9050 4250 9350 4250
-Wire Wire Line
-	9050 5250 9350 5250
 $Comp
 L Logic_LevelTranslator:TXB0104D U4
 U 1 1 5D4E5066
@@ -582,19 +453,11 @@ Text GLabel 8100 3300 3    50   Input ~ 0
 TP_DR
 Text GLabel 9300 1650 2    50   Input ~ 0
 PB0
-Text GLabel 9350 4250 2    50   Input ~ 0
-PB0
 Text GLabel 9300 2450 2    50   Input ~ 0
 PB1
 Text GLabel 9300 2550 2    50   Input ~ 0
 PB3
 Text GLabel 9300 2650 2    50   Input ~ 0
-PB2
-Text GLabel 9350 5050 2    50   Input ~ 0
-PB1
-Text GLabel 9350 5150 2    50   Input ~ 0
-PB3
-Text GLabel 9350 5250 2    50   Input ~ 0
 PB2
 Text GLabel 2750 1700 2    50   Input ~ 0
 TP_SDA_3V3
@@ -626,4 +489,7 @@ Wire Wire Line
 	2600 1800 2750 1800
 Wire Wire Line
 	2600 2300 2750 2300
+NoConn ~ 8200 3300
+NoConn ~ 8300 3300
+NoConn ~ 8400 3300
 $EndSCHEMATC
