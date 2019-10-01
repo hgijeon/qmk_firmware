@@ -1,6 +1,6 @@
 EESchema Schematic File Version 4
 LIBS:trackpad-cache
-EELAYER 26 0
+EELAYER 29 0
 EELAYER END
 $Descr A4 11693 8268
 encoding utf-8
@@ -428,14 +428,12 @@ Text GLabel 2750 2100 2    50   Input ~ 0
 TP_BTN2_3V3
 Text GLabel 2750 1900 2    50   Input ~ 0
 TP_BTN1_3V3
-Text GLabel 8500 3300 3    50   Input ~ 0
+Text GLabel 8300 3300 3    50   Input ~ 0
 LVL_SHIFT
-NoConn ~ 2600 1900
 NoConn ~ 2600 2000
 NoConn ~ 2600 2100
 NoConn ~ 2750 2100
 NoConn ~ 2750 2000
-NoConn ~ 2750 1900
 $Comp
 L power:GND #PWR0113
 U 1 1 5D4BD70B
@@ -490,6 +488,13 @@ Wire Wire Line
 Wire Wire Line
 	2600 2300 2750 2300
 NoConn ~ 8200 3300
-NoConn ~ 8300 3300
 NoConn ~ 8400 3300
+Text GLabel 4850 2400 0    50   Input ~ 0
+TP_BTN1_3V3
+Text GLabel 5650 2400 2    50   Input ~ 0
+TP_BTN1
+Text GLabel 8500 3300 3    50   Input ~ 0
+TP_BTN1
+Wire Wire Line
+	2600 1900 2750 1900
 $EndSCHEMATC
