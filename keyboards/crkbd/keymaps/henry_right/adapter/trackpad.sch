@@ -359,9 +359,9 @@ Wire Wire Line
 Wire Wire Line
 	5350 1250 5550 1250
 Connection ~ 5350 1250
-Text GLabel 5650 2000 2    50   Input ~ 0
+Text GLabel 5650 2600 2    50   Input ~ 0
 SDA
-Text GLabel 5650 2200 2    50   Input ~ 0
+Text GLabel 5650 2400 2    50   Input ~ 0
 SCL
 Wire Wire Line
 	4850 1800 4700 1800
@@ -428,7 +428,7 @@ Text GLabel 2750 2100 2    50   Input ~ 0
 TP_BTN2_3V3
 Text GLabel 2750 1900 2    50   Input ~ 0
 TP_BTN1_3V3
-Text GLabel 8300 3300 3    50   Input ~ 0
+Text GLabel 8500 3300 3    50   Input ~ 0
 LVL_SHIFT
 NoConn ~ 2600 2000
 NoConn ~ 2600 2100
@@ -461,13 +461,13 @@ Text GLabel 2750 1700 2    50   Input ~ 0
 TP_SDA_3V3
 Text GLabel 2750 1800 2    50   Input ~ 0
 TP_SCL_3V3
-Text GLabel 4850 2000 0    50   Input ~ 0
-TP_SDA_3V3
-Text GLabel 4850 2200 0    50   Input ~ 0
-TP_SCL_3V3
 Text GLabel 4850 2600 0    50   Input ~ 0
+TP_SDA_3V3
+Text GLabel 4850 2400 0    50   Input ~ 0
+TP_SCL_3V3
+Text GLabel 4850 2000 0    50   Input ~ 0
 TP_DR_3V3
-Text GLabel 5650 2600 2    50   Input ~ 0
+Text GLabel 5650 2000 2    50   Input ~ 0
 TP_DR
 Text GLabel 7400 2050 3    50   Input ~ 0
 SDA
@@ -489,11 +489,11 @@ Wire Wire Line
 	2600 2300 2750 2300
 NoConn ~ 8200 3300
 NoConn ~ 8400 3300
-Text GLabel 4850 2400 0    50   Input ~ 0
+Text GLabel 4850 2200 0    50   Input ~ 0
 TP_BTN1_3V3
-Text GLabel 5650 2400 2    50   Input ~ 0
+Text GLabel 5650 2200 2    50   Input ~ 0
 TP_BTN1
-Text GLabel 8500 3300 3    50   Input ~ 0
+Text GLabel 8300 3300 3    50   Input ~ 0
 TP_BTN1
 Wire Wire Line
 	2600 1900 2750 1900
