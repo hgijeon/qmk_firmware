@@ -32,6 +32,7 @@ void level_shift_init(void){
 //// END TMP FIELD ////
 
 void pointing_device_init(void){
+    return;
   level_shift_init();
 
 //spi init이 hw init보다 앞에 있어야 한다.
@@ -43,6 +44,7 @@ void pointing_device_init(void){
 }
 
 void pointing_device_task(void){
+    return;
   if (isScrollMode){}
 
   static int accum_x = 0, accum_y = 0;

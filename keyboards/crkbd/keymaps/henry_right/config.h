@@ -12,7 +12,7 @@
 /* Select hand configuration */
 #define MASTER_RIGHT
 
-//#define USE_SERIAL_PD2
+#define USE_SERIAL_PD2
 
 #define TAPPING_FORCE_HOLD
 #define TAPPING_TERM 300
@@ -28,7 +28,7 @@
 /* key matrix size */
 // Rows are doubled-up
 #undef MATRIX_COL_PINS
-#define MATRIX_COL_PINS { F4, F5, F6, F7, C7, F1 }
+#define MATRIX_COL_PINS { F4, F5, F6, F7, B1, B3 }
 
 /* ws2812 RGB LED */
 #undef RGB_DI_PIN
